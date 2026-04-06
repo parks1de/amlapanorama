@@ -495,6 +495,23 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      background-image: url('assets/571242879_4128466430632395_6358847915557239371_n.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .om-content::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(245, 240, 232, 0.82);
+      pointer-events: none;
+    }
+
+    .om-content > * {
+      position: relative;
+      z-index: 1;
     }
 
     .om-content .lead {
