@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Amla Panorama — Solrike tomter med panoramautsikt over Sognefjorden. Åmla, Sogndal kommune." />
+  <title>Amla Panorama — Sognefjorden</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/568822956_122097363573095366_583790073481449168_n.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS RESET & CUSTOM PROPERTIES
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy:      #0D1B2A;
+      --navy-light:#13273d;
+      --offwhite:  #F5F0E8;
+      --gold:      #C9A84C;
+      --gold-light:#dfc06e;
+      --sage:      #4A6741;
+      --sage-light:#5c7f52;
+      --text-dark: #1a1a1a;
+      --text-mid:  #3a3a3a;
+      --text-light:#6b6b6b;
+
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-sm:  0 2px 12px rgba(13,27,42,0.10);
+      --shadow-md:  0 8px 32px rgba(13,27,42,0.16);
+      --shadow-lg:  0 20px 60px rgba(13,27,42,0.22);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-dark);
+      background: var(--offwhite);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--navy);
+      margin-bottom: 1.4rem;
+    }
+
+    .section-title--light {
+      color: var(--offwhite);
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    /* ============================================================
+       LAYOUT UTILITIES
+    ============================================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-pad {
+      padding: 6rem 0;
+    }
+
+    /* ============================================================
+       FADE-IN ANIMATION (Intersection Observer)
+    ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.2rem 0;
+      transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+    }
+
+    #nav.scrolled {
+      background: rgba(13, 27, 42, 0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0.8rem 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #fff;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile nav drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--navy);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-drawer.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-drawer a {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--offwhite);
+      letter-spacing: 0.05em;
+      transition: color var(--transition);
+    }
+
+    .nav-drawer a:hover {
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background-image: url('assets/571742790_122097367941095366_1974457781806265866_n.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,27,42,0.45) 0%,
+        rgba(13,27,42,0.35) 50%,
+        rgba(13,27,42,0.65) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      padding: 0 1.5rem;
+      max-width: 860px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-logo-img {
+      max-width: 380px;
+      width: 80%;
+      margin: 0 auto 1.8rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s forwards;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.03em;
+      opacity: 0;
+      animation: fadeUp 1s 0.75s forwards;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.8rem auto;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.85rem 2.4rem;
+      border: 1px solid rgba(201,168,76,0.7);
+      border-radius: 2px;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(201,168,76,0.12);
+      transition: background var(--transition), border-color var(--transition);
+      opacity: 0;
+      animation: fadeUp 1s 1.05s forwards;
+    }
+
+    .hero-cta:hover {
+      background: rgba(201,168,76,0.28);
+      border-color: var(--gold);
+    }
+
+    /* Scroll arrow */
+    .scroll-arrow {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.5s forwards;
+    }
+
+    .scroll-arrow span {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .scroll-arrow svg {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ============================================================
+       SECTION 3 — OM PROSJEKTET
+    ============================================================ */
+    #om-prosjektet {
+      background: #fff;
+    }
+
+    .om-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 620px;
+    }
+
+    .om-photo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .om-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .om-photo:hover img {
+      transform: scale(1.03);
+    }
+
+    .om-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, #fff);
+    }
+
+    .om-content {
+      padding: 5rem 4rem 4rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .om-content .lead {
+      margin-bottom: 2.5rem;
+    }
+
+    /* Stat cards */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-card {
+      background: var(--offwhite);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.4rem;
+      border-left: 3px solid var(--gold);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .stat-value {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    /* ============================================================
+       SECTION 4 — BELIGGENHET
+    ============================================================ */
+    #beliggenhet {
+      background: var(--navy);
+    }
+
+    .beliggenhet-banner {
+      position: relative;
+      height: 420px;
+      background-image: url('assets/571676421_122097364791095366_8794722533776943568_n.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .beliggenhet-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,27,42,0.68);
+    }
+
+    .beliggenhet-banner-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+
+    .beliggenhet-banner-content .section-label {
+      margin-bottom: 0.8rem;
+    }
+
+    .beliggenhet-place {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    .beliggenhet-place em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .beliggenhet-bottom {
+      background: var(--navy);
+      padding: 0 0 5rem;
+    }
+
+    .map-wrap {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 420px;
+      border: 0;
+      filter: saturate(0.85) brightness(0.95);
+    }
+
+    .distance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .distance-item {
+      text-align: center;
+      padding: 1.8rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(201,168,76,0.15);
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .distance-item:hover {
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .distance-time {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .distance-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       SECTION 5 — TOMTENE
+    ============================================================ */
+    #tomtene {
+      background: var(--offwhite);
+    }
+
+    .tomtene-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .tomtene-header .lead {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .plots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .plot-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow var(--transition), transform var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .plot-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .plot-card-header {
+      padding: 1.5rem 1.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .plot-number {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .plot-size {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--navy);
+      font-weight: 300;
+      line-height: 1;
+      padding: 1rem 1.5rem 0;
+    }
+
+    .plot-size span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.28rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge--ledig {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .badge--reservert {
+      background: #fff8e1;
+      color: #b8860b;
+    }
+
+    .badge--solgt {
+      background: #f5f5f5;
+      color: #757575;
+    }
+
+    .plot-body {
+      padding: 0.8rem 1.5rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plot-desc {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .plot-divider {
+      height: 1px;
+      background: var(--offwhite);
+      margin-bottom: 1.2rem;
+    }
+
+    .btn-forespor {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background var(--transition);
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+
+    .btn-forespor:hover {
+      background: var(--navy-light);
+    }
+
+    .btn-forespor--gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-forespor--gold:hover {
+      background: var(--gold-light);
+    }
+
+    .plots-note {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-style: italic;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+    }
+
+    /* ============================================================
+       SECTION 6 — GALLERI
+    ============================================================ */
+    #galleri {
+      background: var(--navy);
+    }
+
+    .galleri-header {
+      text-align: center;
+      padding: 5rem 0 3rem;
+    }
+
+    .galleri-header .section-title {
+      color: var(--offwhite);
+    }
+
+    .masonry {
+      column-count: 3;
+      column-gap: 1rem;
+      padding: 0 2rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .masonry-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(13,27,42,0);
+      transition: background 0.35s ease;
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .masonry-item:hover::after {
+      background: rgba(13,27,42,0.18);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.92);
+      transition: transform 0.35s ease;
+    }
+
+    #lightbox.open img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background var(--transition);
+      z-index: 1;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: background var(--transition);
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    .lightbox-prev { left: 1.5rem; }
+    .lightbox-next { right: 1.5rem; }
+
+    /* ============================================================
+       SECTION 7 — KONTAKT
+    ============================================================ */
+    #kontakt {
+      background: var(--navy);
+    }
+
+    .kontakt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .kontakt-info {
+      color: var(--offwhite);
+    }
+
+    .kontakt-info .section-label {
+      margin-bottom: 0.8rem;
+    }
+
+    .kontakt-info .section-title {
+      color: var(--offwhite);
+      margin-bottom: 2rem;
+    }
+
+    .kontakt-detail {
+      margin-bottom: 1rem;
+    }
+
+    .kontakt-detail-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .kontakt-detail-value {
+      font-size: 0.98rem;
+      color: rgba(245,240,232,0.8);
+    }
+
+    .kontakt-detail-value a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-decoration-color: rgba(201,168,76,0.3);
+      transition: text-decoration-color var(--transition);
+    }
+
+    .kontakt-detail-value a:hover {
+      text-decoration-color: var(--gold);
+    }
+
+    .finn-link-wrap {
+      margin-top: 2rem;
+      padding: 1.2rem 1.4rem;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: var(--radius-md);
+    }
+
+    .finn-link-wrap p {
+      font-size: 0.82rem;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .finn-link-wrap a {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--gold);
+      text-decoration: underline;
+      text-decoration-color: rgba(201,168,76,0.3);
+      transition: text-decoration-color var(--transition);
+    }
+
+    .finn-link-wrap a:hover {
+      text-decoration-color: var(--gold);
+    }
+
+    /* Form */
+    .kontakt-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.55);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      color: var(--offwhite);
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      transition: border-color var(--transition), background var(--transition);
+      outline: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(245,240,232,0.3);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .form-group input.error,
+    .form-group textarea.error {
+      border-color: #e57373;
+    }
+
+    .form-error-msg {
+      font-size: 0.72rem;
+      color: #ef9a9a;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-send {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      margin-top: 0.5rem;
+    }
+
+    .btn-send:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-send:active {
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: #06111c;
+      color: rgba(245,240,232,0.55);
+      text-align: center;
+      padding: 3.5rem 2rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--offwhite);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-logo span { color: var(--gold); }
+
+    .footer-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 2rem;
+    }
+
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(201,168,76,0.3);
+      margin: 1.8rem auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+      transition: color var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.3);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .plots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .distance-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .kontakt-grid {
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-drawer { display: flex; }
+
+      #hero {
+        background-attachment: scroll;
+      }
+
+      .beliggenhet-banner {
+        background-attachment: scroll;
+      }
+
+      .hero-logo-img {
+        max-width: 260px;
+      }
+
+      .om-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .om-photo {
+        height: 300px;
+      }
+
+      .om-photo-overlay {
+        background: linear-gradient(to bottom, transparent 50%, #fff);
+      }
+
+      .om-content {
+        padding: 2.5rem 1.5rem 2.5rem;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .plots-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .masonry {
+        column-count: 2;
+        padding: 0 1rem 3rem;
+      }
+
+      .kontakt-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .kontakt-form {
+        padding: 1.8rem 1.2rem;
+      }
+
+      .distance-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-pad {
+        padding: 4rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .masonry {
+        column-count: 1;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .distance-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="nav" role="navigation" aria-label="Hovednavigasjon">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Amla <span>Panorama</span></a>
+      <ul class="nav-links">
+        <li><a href="#om-prosjektet">Om Prosjektet</a></li>
+        <li><a href="#beliggenhet">Beliggenhet</a></li>
+        <li><a href="#tomtene">Tomtene</a></li>
+        <li><a href="#galleri">Galleri</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Åpne meny" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Mobilmeny">
+    <a href="#om-prosjektet" class="drawer-link">Om Prosjektet</a>
+    <a href="#beliggenhet" class="drawer-link">Beliggenhet</a>
+    <a href="#tomtene" class="drawer-link">Tomtene</a>
+    <a href="#galleri" class="drawer-link">Galleri</a>
+    <a href="#kontakt" class="drawer-link">Kontakt</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Åmla · Sogndal · Vestland</p>
+      <img
+        class="hero-logo-img"
+        src="assets/571676421_122097364791095366_8794722533776943568_n.jpg"
+        alt="Amla Panorama logo"
+      />
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">Solrike tomter med panoramautsikt over Sognefjorden</p>
+      <a href="#om-prosjektet" class="hero-cta">Utforsk prosjektet</a>
+    </div>
+    <a href="#om-prosjektet" class="scroll-arrow" aria-label="Scroll ned">
+      <span>Scroll</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ============================================================
+       OM PROSJEKTET
+  ============================================================ -->
+  <section id="om-prosjektet">
+    <div class="om-grid">
+      <div class="om-photo">
+        <img
+          src="assets/589550250_122105732949095366_408568298106298481_n.jpg"
+          alt="Vintersoloppgang over Sognefjorden sett fra Åmla"
+          loading="lazy"
+        />
+        <div class="om-photo-overlay"></div>
+      </div>
+      <div class="om-content">
+        <span class="section-label fade-in">Om Prosjektet</span>
+        <h2 class="section-title fade-in fade-in-delay-1">Et unikt sted å bygge ditt hjem</h2>
+        <p class="lead fade-in fade-in-delay-2">
+          Åmla er en stille og solrik perle i Sogndal kommune. Her får du tomter med uhindret utsikt over Sognefjorden og rolige, naturskjønne omgivelser — bare 15 minutter fra Sogndal sentrum.
+        </p>
+        <p class="lead fade-in fade-in-delay-2" style="margin-top:1rem; font-size:0.95rem;">
+          Veien opp vil bli oppgradert innen 2027. Alle tomter leveres med vei, vann, avløp og bredbånd til grensen.
+        </p>
+        <div class="stat-grid" style="margin-top:2rem;">
+          <div class="stat-card fade-in fade-in-delay-1">
+            <div class="stat-value">~600 m</div>
+            <div class="stat-label">til buss</div>
+          </div>
+          <div class="stat-card fade-in fade-in-delay-2">
+            <div class="stat-value">15 min</div>
+            <div class="stat-label">til Sogndal sentrum</div>
+          </div>
+          <div class="stat-card fade-in fade-in-delay-3">
+            <div class="stat-value">~60 m</div>
+            <div class="stat-label">til strand</div>
+          </div>
+          <div class="stat-card fade-in fade-in-delay-4">
+            <div class="stat-value">500 m²</div>
+            <div class="stat-label">Tomter fra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BELIGGENHET
+  ============================================================ -->
+  <section id="beliggenhet">
+    <div class="beliggenhet-banner">
+      <div class="beliggenhet-overlay"></div>
+      <div class="beliggenhet-banner-content fade-in">
+        <span class="section-label">Beliggenhet</span>
+        <h2 class="beliggenhet-place">Åmla, <em>Sogndal</em> — Vestland</h2>
+      </div>
+    </div>
+    <div class="beliggenhet-bottom">
+      <div class="container">
+        <div class="map-wrap fade-in" style="margin-top:-2rem; position:relative; z-index:1;">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=7.05%2C61.16%2C7.12%2C61.19&amp;layer=mapnik&amp;marker=61.175%2C7.085"
+            title="Kart over Åmla, Sogndal"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="distance-grid">
+          <div class="distance-item fade-in fade-in-delay-1">
+            <div class="distance-time">15 min</div>
+            <div class="distance-label">Sogndal sentrum</div>
+          </div>
+          <div class="distance-item fade-in fade-in-delay-2">
+            <div class="distance-time">15 min</div>
+            <div class="distance-label">Leikanger</div>
+          </div>
+          <div class="distance-item fade-in fade-in-delay-3">
+            <div class="distance-time">1 t</div>
+            <div class="distance-label">Flåm</div>
+          </div>
+          <div class="distance-item fade-in fade-in-delay-4">
+            <div class="distance-time">2,5 t</div>
+            <div class="distance-label">Bergen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TOMTENE
+  ============================================================ -->
+  <section id="tomtene" class="section-pad">
+    <div class="container">
+      <div class="tomtene-header fade-in">
+        <span class="section-label">Tilgjengelige tomter</span>
+        <h2 class="section-title">Tomtene</h2>
+        <p class="lead" style="margin:0 auto; text-align:center;">
+          Seks nøye utvalgte tomter med fremragende sol- og utsiktsforhold. Alle tomter tilknyttes offentlig infrastruktur.
+        </p>
+      </div>
+
+      <div class="plots-grid">
+
+        <!-- Tomt 1 -->
+        <article class="plot-card fade-in fade-in-delay-1">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 1</span>
+            <span class="badge badge--ledig">Ledig</span>
+          </div>
+          <div class="plot-size">650 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Sørvendt med direkte fjordutsikt. Enestående solforhold gjennom hele dagen.</p>
+            <div class="plot-divider"></div>
+            <a href="#kontakt" class="btn-forespor btn-forespor--gold">Forespør tomt</a>
+          </div>
+        </article>
+
+        <!-- Tomt 2 -->
+        <article class="plot-card fade-in fade-in-delay-2">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 2</span>
+            <span class="badge badge--reservert">Reservert</span>
+          </div>
+          <div class="plot-size">820 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Romslig hjørnetomt med panoramautsikt. Privat og skjermet beliggenhet.</p>
+            <div class="plot-divider"></div>
+            <button class="btn-forespor" disabled style="opacity:0.45; cursor:not-allowed;">Reservert</button>
+          </div>
+        </article>
+
+        <!-- Tomt 3 -->
+        <article class="plot-card fade-in fade-in-delay-3">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 3</span>
+            <span class="badge badge--ledig">Ledig</span>
+          </div>
+          <div class="plot-size">580 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Flatt og byggeklart areal. Ideell for effektiv utnyttelse og moderne arkitektur.</p>
+            <div class="plot-divider"></div>
+            <a href="#kontakt" class="btn-forespor btn-forespor--gold">Forespør tomt</a>
+          </div>
+        </article>
+
+        <!-- Tomt 4 -->
+        <article class="plot-card fade-in fade-in-delay-1">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 4</span>
+            <span class="badge badge--ledig">Ledig</span>
+          </div>
+          <div class="plot-size">1 200 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Stor naturtomt med skog i bakkant. Unik kombinasjon av natur og fjordpanorama.</p>
+            <div class="plot-divider"></div>
+            <a href="#kontakt" class="btn-forespor btn-forespor--gold">Forespør tomt</a>
+          </div>
+        </article>
+
+        <!-- Tomt 5 -->
+        <article class="plot-card fade-in fade-in-delay-2">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 5</span>
+            <span class="badge badge--solgt">Solgt</span>
+          </div>
+          <div class="plot-size">960 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Vestvendt med kveldssol over fjorden. Fantastiske solnedgangsforhold.</p>
+            <div class="plot-divider"></div>
+            <button class="btn-forespor" disabled style="opacity:0.35; cursor:not-allowed;">Solgt</button>
+          </div>
+        </article>
+
+        <!-- Tomt 6 -->
+        <article class="plot-card fade-in fade-in-delay-3">
+          <div class="plot-card-header">
+            <span class="plot-number">Tomt 6</span>
+            <span class="badge badge--ledig">Ledig</span>
+          </div>
+          <div class="plot-size">750 <span>m²</span></div>
+          <div class="plot-body">
+            <p class="plot-desc">Midt i feltet med gode solforhold hele dagen. Nær fellesarealer og infrastruktur.</p>
+            <div class="plot-divider"></div>
+            <a href="#kontakt" class="btn-forespor btn-forespor--gold">Forespør tomt</a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="plots-note fade-in">
+        Ta kontakt for gjeldende prisliste og tilgjengelighet
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALLERI
+  ============================================================ -->
+  <section id="galleri">
+    <div class="galleri-header fade-in">
+      <span class="section-label">Bilder fra området</span>
+      <h2 class="section-title section-title--light">Galleri</h2>
+    </div>
+    <div class="masonry" id="masonry">
+      <div class="masonry-item fade-in" data-src="assets/571742790_122097367941095366_1974457781806265866_n.jpg">
+        <img src="assets/571742790_122097367941095366_1974457781806265866_n.jpg" alt="Høstgyllen solnedgang over Sognefjorden" loading="lazy" />
+      </div>
+      <div class="masonry-item fade-in fade-in-delay-1" data-src="assets/589550250_122105732949095366_408568298106298481_n.jpg">
+        <img src="assets/589550250_122105732949095366_408568298106298481_n.jpg" alt="Vintersoloppgang over Sognefjorden" loading="lazy" />
+      </div>
+      <div class="masonry-item fade-in fade-in-delay-2" data-src="assets/571676421_122097364791095366_8794722533776943568_n.jpg">
+        <img src="assets/571676421_122097364791095366_8794722533776943568_n.jpg" alt="Amla Panorama — panoramabanner" loading="lazy" />
+      </div>
+      <div class="masonry-item fade-in fade-in-delay-3" data-src="assets/571395506_122097381123095366_7492329102280093803_n.jpg">
+        <img src="assets/571395506_122097381123095366_7492329102280093803_n.jpg" alt="Galleri — Åmla naturscene" loading="lazy" />
+      </div>
+      <div class="masonry-item fade-in fade-in-delay-1" data-src="assets/568822956_122097363573095366_583790073481449168_n.jpg">
+        <img src="assets/568822956_122097363573095366_583790073481449168_n.jpg" alt="Amla Panorama logo" loading="lazy" />
+      </div>
+      <div class="masonry-item fade-in fade-in-delay-2" data-src="assets/663381238_4327065400772496_7531479844582795794_n.jpg">
+        <img src="assets/663381238_4327065400772496_7531479844582795794_n.jpg" alt="Galleri — Åmla" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildevisning">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Lukk">&#215;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Forrige bilde">&#8249;</button>
+    <img id="lightboxImg" src="" alt="Forstørret galleri-bilde" />
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Neste bilde">&#8250;</button>
+  </div>
+
+  <!-- ============================================================
+       KONTAKT
+  ============================================================ -->
+  <section id="kontakt" class="section-pad">
+    <div class="container">
+      <div class="kontakt-grid">
+
+        <!-- Left: Info -->
+        <div class="kontakt-info fade-in">
+          <span class="section-label">Ta kontakt</span>
+          <h2 class="section-title">La oss hjelpe deg med å finne din tomt</h2>
+
+          <div class="kontakt-detail">
+            <div class="kontakt-detail-label">Firma</div>
+            <div class="kontakt-detail-value">Amla Panorama AS</div>
+          </div>
+          <div class="kontakt-detail">
+            <div class="kontakt-detail-label">Telefon</div>
+            <div class="kontakt-detail-value">
+              <a href="tel:+4791743556">91 74 35 56</a>
+            </div>
+          </div>
+          <div class="kontakt-detail">
+            <div class="kontakt-detail-label">E-post</div>
+            <div class="kontakt-detail-value">
+              <a href="mailto:post@amlapanorama.no">post@amlapanorama.no</a>
+            </div>
+          </div>
+          <div class="kontakt-detail">
+            <div class="kontakt-detail-label">Adresse</div>
+            <div class="kontakt-detail-value">Åmla 9, 6855 Kaupanger</div>
+          </div>
+
+          <div class="finn-link-wrap">
+            <p>Se prosjektet på FINN.no</p>
+            <a href="https://www.finn.no/realestate/newbuildings/ad.html?finnkode=435508531" target="_blank" rel="noopener noreferrer">
+              Se annonsen på FINN.no ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="fade-in fade-in-delay-2">
+          <form
+            class="kontakt-form"
+            id="kontaktForm"
+            action="mailto:post@amlapanorama.no"
+            method="post"
+            enctype="text/plain"
+            novalidate
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label for="navn">Navn *</label>
+                <input type="text" id="navn" name="Navn" placeholder="Ditt fulle navn" autocomplete="name" />
+                <span class="form-error-msg" id="navn-error">Vennligst oppgi navn</span>
+              </div>
+              <div class="form-group">
+                <label for="epost">E-post *</label>
+                <input type="email" id="epost" name="Epost" placeholder="din@epost.no" autocomplete="email" />
+                <span class="form-error-msg" id="epost-error">Ugyldig e-postadresse</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="telefon">Telefon *</label>
+              <input type="tel" id="telefon" name="Telefon" placeholder="12 34 56 78" autocomplete="tel" />
+              <span class="form-error-msg" id="telefon-error">Vennligst oppgi telefonnummer</span>
+            </div>
+            <div class="form-group">
+              <label for="melding">Melding *</label>
+              <textarea id="melding" name="Melding" placeholder="Fortell oss gjerne hvilken tomt du er interessert i og eventuelle spørsmål du har..."></textarea>
+              <span class="form-error-msg" id="melding-error">Vennligst skriv en melding</span>
+            </div>
+            <button type="submit" class="btn-send">Send forespørsel</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="footer-logo">Amla <span>Panorama</span></div>
+    <div class="footer-tagline">Solrike tomter med panoramautsikt over Sognefjorden</div>
+    <div class="footer-divider"></div>
+    <nav class="footer-links" aria-label="Fotnavigasjon">
+      <a href="#om-prosjektet">Om Prosjektet</a>
+      <a href="#beliggenhet">Beliggenhet</a>
+      <a href="#tomtene">Tomtene</a>
+      <a href="#galleri">Galleri</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <p class="footer-copy">© 2025 Amla Panorama AS &nbsp;·&nbsp; Åmla 9, 6855 Kaupanger</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ─── NAV: scroll-based class toggle ─── */
+    const nav = document.getElementById('nav');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+
+    function onScroll() {
+      // Scrolled class
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      // Active section highlight
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ─── HAMBURGER / MOBILE DRAWER ─── */
+    const hamburger = document.getElementById('hamburger');
+    const navDrawer = document.getElementById('navDrawer');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
+
+    function toggleDrawer(open) {
+      hamburger.classList.toggle('open', open);
+      navDrawer.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = navDrawer.classList.contains('open');
+      toggleDrawer(!isOpen);
+    });
+
+    drawerLinks.forEach(link => {
+      link.addEventListener('click', () => toggleDrawer(false));
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && navDrawer.classList.contains('open')) {
+        toggleDrawer(false);
+      }
+    });
+
+    /* ─── INTERSECTION OBSERVER: fade-in ─── */
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    /* ─── LIGHTBOX ─── */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const galleryItems = Array.from(document.querySelectorAll('.masonry-item'));
+
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      const src = galleryItems[currentIndex].getAttribute('data-src');
+      const alt = galleryItems[currentIndex].querySelector('img').getAttribute('alt');
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      const src = galleryItems[currentIndex].getAttribute('data-src');
+      const alt = galleryItems[currentIndex].querySelector('img').getAttribute('alt');
+      lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightboxImg.style.opacity = '1';
+      }, 150);
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      const src = galleryItems[currentIndex].getAttribute('data-src');
+      const alt = galleryItems[currentIndex].querySelector('img').getAttribute('alt');
+      lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightboxImg.style.opacity = '1';
+      }, 150);
+    }
+
+    lightboxImg.style.transition = 'opacity 0.15s ease';
+
+    galleryItems.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', showPrev);
+    lightboxNext.addEventListener('click', showNext);
+
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    });
+
+    /* ─── CONTACT FORM VALIDATION ─── */
+    const form = document.getElementById('kontaktForm');
+
+    function showError(fieldId, errorId, show) {
+      const field = document.getElementById(fieldId);
+      const error = document.getElementById(errorId);
+      field.classList.toggle('error', show);
+      error.style.display = show ? 'block' : 'none';
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    form.addEventListener('submit', e => {
+      let valid = true;
+
+      const navn = document.getElementById('navn').value.trim();
+      const epost = document.getElementById('epost').value.trim();
+      const telefon = document.getElementById('telefon').value.trim();
+      const melding = document.getElementById('melding').value.trim();
+
+      if (!navn) {
+        showError('navn', 'navn-error', true);
+        valid = false;
+      } else {
+        showError('navn', 'navn-error', false);
+      }
+
+      if (!epost || !validateEmail(epost)) {
+        showError('epost', 'epost-error', true);
+        valid = false;
+      } else {
+        showError('epost', 'epost-error', false);
+      }
+
+      if (!telefon) {
+        showError('telefon', 'telefon-error', true);
+        valid = false;
+      } else {
+        showError('telefon', 'telefon-error', false);
+      }
+
+      if (!melding) {
+        showError('melding', 'melding-error', true);
+        valid = false;
+      } else {
+        showError('melding', 'melding-error', false);
+      }
+
+      if (!valid) {
+        e.preventDefault();
+      }
+    });
+
+    // Clear error on input
+    ['navn', 'epost', 'telefon', 'melding'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        el.classList.remove('error');
+        document.getElementById(id + '-error').style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
